@@ -152,9 +152,9 @@ services:
   erddap:
     container_name: erddap
     build: ./erddap
-    volumes:
-     - erddap-data:/erddapData
-     - erddap-config:/usr/local/tomcat/content/erddap
+    # volumes:
+    #  - erddap-data:/erddapData
+    #  - erddap-config:/usr/local/tomcat/content/erddap
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: erddap.$HOST
