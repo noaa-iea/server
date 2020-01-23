@@ -289,8 +289,7 @@ git clone https://github.com/marinebon/iea-server.git
 cd ~/iea-server
 
 # set environment variables
-#echo "PASSWORD=S3cr!tpw" > .env
-echo "PASSWORD=ieaNE2020" > .env
+echo "PASSWORD=S3cr!tpw" > .env
 echo "HOST=iea-ne.us" >> .env
 cat .env
 
