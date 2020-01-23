@@ -145,7 +145,7 @@ services:
     environment:
       VIRTUAL_HOST: info.$HOST
     ports:
-      - 80:80
+      - 8088:80
 
   # docker run -d -p 8080:8080 --name erddap axiom/docker-erddap
   # sudo docker exec -it erddap bash -c "cd webapps/erddap/WEB-INF/ && bash GenerateDatasetsXml.sh -verbose"
