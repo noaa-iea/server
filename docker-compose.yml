@@ -11,7 +11,7 @@ volumes:
 services:
 
   nginx-proxy:
-    container_name: s4w-proxy
+    container_name: proxy
     image: jwilder/nginx-proxy
     env_file: .env
     environment:
@@ -31,7 +31,7 @@ services:
       - rstudio-shiny
 
   postgis:
-    container_name: s4w-postgis
+    container_name: postgis
     image: kartoza/postgis:11.0-2.5
     environment:
       POSTGRES_DBNAME: gis
@@ -46,7 +46,7 @@ services:
       - 5432:5432
 
   postgis-backup:
-    container_name: s4w-postgis-backup
+    container_name: postgis-backup
     image: kartoza/pg-backup:11.0
     volumes:
       - postgis-backups:/backups
@@ -62,7 +62,7 @@ services:
       - postgis
 
   geoserver:
-    container_name: s4w-geoserver
+    container_name: geoserver
     image: kartoza/geoserver:2.15.2
     environment:
       VIRTUAL_HOST: gs.$HOST
@@ -83,7 +83,7 @@ services:
       retries: 3
 
   mysql:
-    container_name: s4w-mysql
+    container_name: mysql
     image: mysql:8.0.18
     volumes:
       - mysql-data:/var/lib/mysql
@@ -97,7 +97,7 @@ services:
       - 3306:3306
 
   wordpress:
-    container_name: s4w-wordpress
+    container_name: wordpress
     depends_on:
       - mysql
     image: wordpress:php7.4-apache
@@ -114,7 +114,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
 
   rstudio-shiny:
-    container_name: s4w-rstudio-shiny
+    container_name: rstudio-shiny
     build: ./rstudio-shiny
     image: bdbest/rstudio-shiny:s4w
     volumes:

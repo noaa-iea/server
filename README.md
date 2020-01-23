@@ -9,15 +9,14 @@ Uses: https://github.com/ekalinin/github-markdown-toc
 
 * [Server software](#server-software)
 * [Shell into server](#shell-into-server)
+* [Create Server](#create-server)
 * [Install docker, docker-compose](#install-docker-docker-compose)
    * [docker](#docker)
    * [docker-compose](#docker-compose)
-   * [OLD: Move docker storage](#old-move-docker-storage)
-   * [update 2019-12-17](#update-2019-12-17)
 * [Build containers](#build-containers)
    * [Test webserver](#test-webserver)
+* [Setup domain iea-ne.us](#setup-domain-iea-neus)
    * [ships4whales](#ships4whales)
-   * [DNS manage *.ships4whales.org](#dns-manage-ships4whalesorg)
    * [rstudio-shiny](#rstudio-shiny)
 * [Docker maintenance](#docker-maintenance)
    * [Push docker image](#push-docker-image)
@@ -26,24 +25,23 @@ Uses: https://github.com/ekalinin/github-markdown-toc
    * [Inspect docker logs](#inspect-docker-logs)
 * [TODO](#todo)
 
-
 ## Server software
 
 - Content management system:
   - [WordPress](https://wordpress.com)<br>
-    **ships4whales.org**
+    **iea-ne.us**
   - [MySQL](https://www.mysql.com/)<br>
-    ships4whales.org **:3306**
+    iea-ne.us **:3306**
 - Analytical apps:
   - [Shiny](https://shiny.rstudio.com)<br>
-    **shiny.** ships4whales.org
+    **shiny.** iea-ne.us
   - [RStudio](https://rstudio.com/products/rstudio/#rstudio-server)<br>
-    **rstudio.** ships4whales.org
+    **rstudio.** iea-ne.us
 - Spatial engine:
   - [GeoServer](http://geoserver.org)<br>
-    **gs.** ships4whales.org
+    **gs.** iea-ne.us
   - [PostGIS](https://postgis.net)<br>
-    ships4whales.org **:5432**
+    iea-ne.us **:5432**
 - Containerized using:
   - [docker](https://docs.docker.com/engine/installation/)
   - [docker-compose](https://docs.docker.com/compose/install/)
@@ -58,52 +56,69 @@ Uses: https://github.com/ekalinin/github-markdown-toc
     ssh -i ~/.ssh/id_rsa.pem bbest@ec2-34-220-29-172.us-west-2.compute.amazonaws.com
     ```
 
+## Create Server
+
+Created droplet at https://digitalocean.com with ben@ecoquants.com (Google login):
+
+- Choose an image : Distributions : Marketplace : 
+  - **Docker** by DigitalOcean VERSION 18.06.1 OS Ubuntu 18.04
+- Choose a plan : Standard : 
+  - **$20 /mo** $0.030 /hour
+  - 4 GB / 2 CPUs
+  - 80 GB SSD disk
+  - 4 TB transfer
+- Choose a datacenter region :
+  - **San Francisco** (New York currently experiencing issues)
+- Authentication :
+  - **One-time password**
+    Emails a one-time root password to you (less secure)
+- How many Droplets?
+  - **1  Droplet**
+- Choose a hostname :
+  - **docker-iea-ne.us**
+
+Emailed:
+
+> Your new Droplet is all set to go! You can access it using the following credentials:
+> 
+> Droplet Name: docker-iea-ne.us
+> IP Address: 64.225.118.240
+> Username: root
+> Password: acaee0eca8104652ce35d830ba
+
+Saved on my Mac to a local file:
+
+```bash
+ssh root@64.225.118.240
+# enter password from above
+# you will be asked to change it upon login
+```
+
+```bash
+echo S3cr!tpw > ~/private/password_docker-iea-ne.us
+cat ~/private/password_docker-iea-ne.us
+```
+
 ## Install docker, docker-compose
 
-Using Ubuntu on Amazon EC2 with 40 GB Amazon EBS volume at `/data` (where linked `/var/lib/docker`) and connecting to Amazon RDS Postgres.
+Since we used an image with `docker` and `docker-compose` already installed, we can skip this step.
+
+References:
+
+- [How To Install and Use Docker on Ubuntu 18.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) for more.
 
 ### docker
-
-Reference:
-
-- [How To Install and Use Docker on Ubuntu 18.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04)
 
 ```bash
 # confirm architecture
 uname -a
-# Linux ip-10-242-0-52 4.15.0-1051-aws #53-Ubuntu SMP Wed Sep 18 13:35:53 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+# Linux docker-iea-ne 4.15.0-58-generic #64-Ubuntu SMP Tue Aug 6 11:12:41 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
 
 # update packages
 sudo apt update
 
-# install a few prerequisite packages which let apt use packages over HTTPS
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
-
-# add the GPG key for the official Docker repository to your system
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-# add the Docker repository to APT sources
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-
-# update the package database with the Docker packages from the newly added repo:
-sudo apt update
-
-# make sure you are about to install from the Docker repo instead of the default Ubuntu repo
-apt-cache policy docker-ce
-
-# install Docker
-sudo apt install docker-ce
-
-# Docker should now be installed, the daemon started, and the process enabled to start on boot. 
 # check that it’s running
-sudo systemctl status docker
-
-# If you want to avoid typing sudo whenever you run the docker command, 
-# add your username to the docker group
-sudo usermod -aG docker ${USER}
-
-# to apply the new group membership, log out of the server and back in, or type the following:
-sudo su - ${USER}
+systemctl status docker
 ```
 
 ### docker-compose
@@ -114,64 +129,9 @@ References:
 - [Install Docker Compose | Docker Documentation](https://docs.docker.com/compose/install/)
 
 ```bash
-# download current stable release
-sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-# apply executable permissions to the binary
-sudo chmod +x /usr/local/bin/docker-compose
-
 # test the installation
 docker-compose --version
-```
-
-### OLD: Move docker storage
-
-Because ran out of room in root drive `/` when subsequently install images:
-
-```bash
-df -h
-```
-
-```
-Filesystem      Size  Used Avail Use% Mounted on
-udev            3.8G     0  3.8G   0% /dev
-tmpfs           763M  800K  762M   1% /run
-/dev/nvme1n1p1  7.7G  5.8G  2.0G  76% /
-tmpfs           3.8G     0  3.8G   0% /dev/shm
-tmpfs           5.0M     0  5.0M   0% /run/lock
-tmpfs           3.8G     0  3.8G   0% /sys/fs/cgroup
-/dev/loop1       18M   18M     0 100% /snap/amazon-ssm-agent/1480
-/dev/nvme0n1     50G   84M   50G   1% /data
-/dev/loop4       90M   90M     0 100% /snap/core/8213
-/dev/loop0       90M   90M     0 100% /snap/core/8268
-tmpfs           763M     0  763M   0% /run/user/1002
-```
-
-Note: 50GB volume mounted on `/data`.
-
-So moved to `/var/lib/docker` to `/data/.`:
-
-```bash
-sudo systemctl stop docker
-sudo mv /var/lib/docker /data/docker
-sudo ln -s /data/docker /var/lib/docker
-sudo systemctl start docker
-```
-
-### update 2019-12-17
-
-```
-bbest@ip-10-242-0-20:~$ df -h
-Filesystem      Size  Used Avail Use% Mounted on
-udev            3.8G     0  3.8G   0% /dev
-tmpfs           763M  860K  762M   1% /run
-/dev/nvme1n1p1   49G  1.8G   47G   4% /
-tmpfs           3.8G     0  3.8G   0% /dev/shm
-tmpfs           5.0M     0  5.0M   0% /run/lock
-tmpfs           3.8G     0  3.8G   0% /sys/fs/cgroup
-/dev/loop0       90M   90M     0 100% /snap/core/7713
-/dev/loop1       18M   18M     0 100% /snap/amazon-ssm-agent/1480
-tmpfs           763M     0  763M   0% /run/user/1003
+# docker-compose version 1.22.0, build f46880fe
 ```
 
 ## Build containers
@@ -219,6 +179,20 @@ Commercial support is available at
 </html>
 ```
 
+## Setup domain iea-ne.us
+
+- Bought domain **iea-ne.us** for **$12/yr** with account bdbest@gmail.com.
+
+- DNS matched to server IP `64.225.118.240` to domain **iea-ne.us** via [Google Domains]( https://domains.google.com/m/registrar/iea-ne.us/dns), plus the following subdomains added under **Custom resource records** with:
+
+- Type: **A**, Data:**64.225.118.240** and Name:
+  - **@**
+  - **wp**
+  - **gs**
+  - **rstudio**
+  - **shiny**
+- Name: **www**, Type: **CNAME**, Data:**iea-ne.us**
+
 ### ships4whales
 
 References:
@@ -235,16 +209,16 @@ You will need access to the following secure files in Google Docs:
 
 First, you will create the environment `.env` file to specify password and host:
 
-- NOTE: Set `PASSWORD`, substituting "CHANGEME" with password from [tech-aws notes | ship-strike - Google Docs](https://docs.google.com/document/d/1-iAlUOVzjw7Ejdlvmt2jVWdG6XhFqm13gWS3hZJ9mDc/edit#). The [docker-compose.yml](https://github.com/BenioffOceanInitiative/s4w-docker/blob/master/docker-compose.yml) uses [variable substitution in Docker](https://docs.docker.com/compose/compose-file/#variable-substitution).
+- NOTE: Set `PASSWORD`, substituting "S3cr!tpw" with password from [tech-aws notes | ship-strike - Google Docs](https://docs.google.com/document/d/1-iAlUOVzjw7Ejdlvmt2jVWdG6XhFqm13gWS3hZJ9mDc/edit#). The [docker-compose.yml](https://github.com/BenioffOceanInitiative/s4w-docker/blob/master/docker-compose.yml) uses [variable substitution in Docker](https://docs.docker.com/compose/compose-file/#variable-substitution).
 
 ```bash
 # get latest docker-compose files
-git clone https://github.com/BenioffOceanInitiative/s4w-docker.git
-cd ~/s4w-docker
+git clone https://github.com/marinebon/iea-server.git
+cd ~/iea-server
 
 # set environment variables
-echo "PASSWORD=CHANGEME" > .env
-echo "HOST=ships4whales.org" >> .env
+echo "PASSWORD=S3cr!tpw" > .env
+echo "HOST=iea-ne.us" >> .env
 cat .env
 
 # launch
@@ -263,16 +237,6 @@ docker-compose restart
 docker-compose stop
 ```
 
-### DNS manage *.ships4whales.org
-
-- Using new public ip address: `34.220.29.172`
-
-- DNS matched to ships4whales.org via [Google Domains]( https://domains.google.com/m/registrar/ships4whales.org/dns), plus the following subdomains added under **Custom resource records** with Type:**A**, Data:**34.220.29.172** and Name:
-
-  - **wp**
-  - **gs**
-  - **rstudio**
-  - **shiny**
 
 ### rstudio-shiny 
 
@@ -291,7 +255,7 @@ Haven't figured out how to RUN these commands after user admin is created in rst
   
 1. Copy [**amazon_rds.yml**](https://drive.google.com/open?id=1eddyoeFO5bslUakzireH1NFh8UsGBfEY) into `/srv/shiny-server/.rds_amazon.yml` for connecting to the Amazon PostgreSQL/PostGIS relational database service (RDS).
 
-1. Go to shiny-apps/shiny_ships and run in rstudio to generate cache which otherwise times out when visiting site shiny.ships4whales.org/shiny_ships.
+1. Go to shiny-apps/shiny_ships and run in rstudio to generate cache which otherwise times out when visiting site shiny.iea-ne.us/shiny_ships.
 
 ## Docker maintenance
 
@@ -309,7 +273,7 @@ docker-compose push
 
 ### Develop on local host
 
-Note setting of `HOST` to `local` vs `ships4whales.org`:
+Note setting of `HOST` to `local` vs `iea-ne.us`:
 
 ```bash
 # get latest docker-compose files
@@ -317,7 +281,7 @@ git clone https://github.com/BenioffOceanInitiative/s4w-docker.git
 cd ~/s4w-docker
 
 # set environment variables
-echo "PASSWORD=CHANGEME" > .env
+echo "PASSWORD=S3cr!tpw" > .env
 echo "HOST=local" >> .env
 cat .env
 
