@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:stable
 
 # install infographic site from Github
 RUN cd /usr/share/nginx && rm -rf html && \
