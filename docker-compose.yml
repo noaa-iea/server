@@ -7,6 +7,8 @@ volumes:
   mysql-data:
   shiny-apps:
   wordpress-html:
+  erddap-data:
+  erddap-config:
   #nginx-html:
 
 services:
@@ -142,3 +144,15 @@ services:
     ports:
       - 8088:80
 
+  # sudo docker exec -it erddap bash -c "cd webapps/erddap/WEB-INF/ && bash GenerateDatasetsXml.sh -verbose"
+  erddap:
+    container_name: erddap
+    build: ./erddap
+    volumes:
+      - erddap-data:/erddapData
+      - erddap-config:/usr/local/tomcat/content/erddap
+    restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: erddap.$HOST
+    ports:
+      - 8888:80

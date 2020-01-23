@@ -42,11 +42,17 @@ Uses: https://github.com/ekalinin/github-markdown-toc
     **gs.** iea-ne.us
   - [PostGIS](https://postgis.net)<br>
     iea-ne.us **:5432**
+
 - Containerized using:
   - [docker](https://docs.docker.com/engine/installation/)
   - [docker-compose](https://docs.docker.com/compose/install/)
   - [nginx-proxy](https://github.com/jwilder/nginx-proxy)
 
+- Infographics
+  - [iea-ne_info](https://github.com/marinebon/iea-ne_info)
+    **rstudio.** iea-ne.us
+  
+  
 ## Shell into server
 
 1. Connect to UCSB VPN via Secure Pulse
@@ -149,6 +155,7 @@ Reference:
 
 ```bash
 docker run --name nginx -p 80:80 -d nginx
+docker run --name nginx0 -p 80:80 -d nginx
 
 # confirm working
 docker ps
@@ -196,6 +203,7 @@ Commercial support is available at
   - **gs**
   - **rstudio**
   - **shiny**
+  - **info**
 - Name: **www**, Type: **CNAME**, Data:**iea-ne.us**
 
 ### ships4whales
