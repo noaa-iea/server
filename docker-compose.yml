@@ -32,6 +32,8 @@ services:
       - geoserver
       - wordpress
       - rstudio-shiny
+      - nginx
+      - erddap
 
   postgis:
     container_name: postgis
