@@ -75,12 +75,12 @@ services:
     volumes:
       - geoserver-data:/opt/geoserver/data_dir
     ports:
-      - 8080:8080
+      - 8888:8080
     restart: unless-stopped
     depends_on:
       - postgis
     healthcheck:
-      test: curl --fail -s http://localhost:8080/ || exit 1
+      test: curl --fail -s http://localhost:8888/ || exit 1
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -155,4 +155,4 @@ services:
     environment:
       VIRTUAL_HOST: erddap.$HOST
     ports:
-      - 8888:80
+      - 8080:8080

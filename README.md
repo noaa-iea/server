@@ -243,6 +243,8 @@ git pull; docker-compose up -d
 # OR build if Dockerfile updated in subfolder
 git pull; docker-compose up --build -d
 
+# git pull; docker-compose up -d --no-deps --build erddap
+
 # OR reload
 docker-compose restart
 
