@@ -7,7 +7,7 @@ volumes:
   mysql-data:
   shiny-apps:
   wordpress-html:
-  nginx-html:
+  #nginx-html:
 
 services:
 
@@ -134,8 +134,8 @@ services:
   nginx:
     container_name: nginx
     build: ./nginx
-    volumes:
-      - nginx-html:/usr/share/nginx/html
+    #volumes:
+    #  - nginx-html:/usr/share/nginx/html
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: info.$HOST
