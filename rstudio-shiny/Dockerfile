@@ -37,5 +37,5 @@ RUN export ADD=shiny && bash /etc/cont-init.d/add
 
 # install Shiny apps
 RUN cd /srv && rm -rf shiny-server && \
-    git clone https://github.com/BenioffOceanInitiative/ships4whales-app.git shiny-server
+    git clone https://github.com/marinebon/iea-ne_apps.git shiny-server
     

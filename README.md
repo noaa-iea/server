@@ -2,8 +2,8 @@
 Server software stack for NOAA's Integrated Ecosystem Assessment (IEA) program, containerized using Docker
 
 Contents:
-<!-- 
-To update table of contents run: `cat README.md | ./gh-md-toc -` 
+<!--
+To update table of contents run: `cat README.md | ./gh-md-toc -`
 Uses: https://github.com/ekalinin/github-markdown-toc
 -->
 
@@ -52,7 +52,7 @@ Uses: https://github.com/ekalinin/github-markdown-toc
 1. Connect to UCSB VPN via Secure Pulse
 1. SSH, eg for Ben:
     ```bash
-    
+
     ssh -i ~/.ssh/id_rsa.pem bbest@ec2-34-220-29-172.us-west-2.compute.amazonaws.com
     ```
 
@@ -60,9 +60,9 @@ Uses: https://github.com/ekalinin/github-markdown-toc
 
 Created droplet at https://digitalocean.com with ben@ecoquants.com (Google login):
 
-- Choose an image : Distributions : Marketplace : 
+- Choose an image : Distributions : Marketplace :
   - **Docker** by DigitalOcean VERSION 18.06.1 OS Ubuntu 18.04
-- Choose a plan : Standard : 
+- Choose a plan : Standard :
   - **$20 /mo** $0.030 /hour
   - 4 GB / 2 CPUs
   - 80 GB SSD disk
@@ -77,14 +77,19 @@ Created droplet at https://digitalocean.com with ben@ecoquants.com (Google login
 - Choose a hostname :
   - **docker-iea-ne.us**
 
+[DigitalOcean - iea-ne.us project](https://cloud.digitalocean.com/projects/367d3107-1892-46a8-ba53-2f10b9ba1e2d/resources?i=c03c66)
+
+
 Emailed:
 
 > Your new Droplet is all set to go! You can access it using the following credentials:
-> 
+>
 > Droplet Name: docker-iea-ne.us
 > IP Address: 64.225.118.240
 > Username: root
 > Password: acaee0eca8104652ce35d830ba
+
+
 
 Saved on my Mac to a local file:
 
@@ -238,21 +243,24 @@ docker-compose stop
 ```
 
 
-### rstudio-shiny 
+### rstudio-shiny
 
 Haven't figured out how to RUN these commands after user admin is created in rstudio-shiny container.
 
 1. Setup **permissions and shortcuts** for admin in rstudio.
-    
-    After logging into rstudio.ships4hwales.org, to go to Terminal window and run:
-    
+
+    After logging into rstudio.iea-ne.us, to go to Terminal window and run:
+
     ```bash
     sudo su -
     ln -s /srv/shiny-server /home/admin/shiny-apps
     ln -s /var/log/shiny-server /home/admin/shiny-logs
     chown -R admin /srv/shiny-server
+    
+    ln -s /usr/share/nginx/html /home/admin/info-html
+    chown -R admin /home/admin/info-html
     ```
-  
+
 1. Copy [**amazon_rds.yml**](https://drive.google.com/open?id=1eddyoeFO5bslUakzireH1NFh8UsGBfEY) into `/srv/shiny-server/.rds_amazon.yml` for connecting to the Amazon PostgreSQL/PostGIS relational database service (RDS).
 
 1. Go to shiny-apps/shiny_ships and run in rstudio to generate cache which otherwise times out when visiting site shiny.iea-ne.us/shiny_ships.
@@ -277,12 +285,13 @@ Note setting of `HOST` to `local` vs `iea-ne.us`:
 
 ```bash
 # get latest docker-compose files
-git clone https://github.com/BenioffOceanInitiative/s4w-docker.git
-cd ~/s4w-docker
+git clone https://github.com/marinebon/iea-server.git
+cd ~/iea-server
 
 # set environment variables
-echo "PASSWORD=S3cr!tpw" > .env
-echo "HOST=local" >> .env
+#echo "PASSWORD=S3cr!tpw" > .env
+echo "PASSWORD=ieaNE2020" > .env
+echo "HOST=iea-ne.us" >> .env
 cat .env
 
 # launch
@@ -324,6 +333,31 @@ docker inspect rstudio-shiny
 ```
 
 ## TODO
+
+Web content:
+
+- Rmd website served by nginx
+- **infographics**
+
+Shiny apps:
+
+- **data-uploader**
+
+Install:
+
+- **ERDDAP**: data server
+  - similar to [ERDDAP | MBON](http://mbon.marine.usf.edu:8000/erddap/index.html), search "Hyde"
+  - [marinebon/erddap-config: ERDDAP config files (setup.xml, datasets.xml)](https://github.com/marinebon/erddap-config)
+  
+- **Drupal**: content management system
+  - [drupal | Docker Hub](https://hub.docker.com/_/drupal/)
+  - used by [integratedecosystemassessment.noaa.gov](https://www.integratedecosystemassessment.noaa.gov/)
+  - alternative to Wordpress
+  
+- **CKAN**: data catalog
+  - similar mbon.ioos.us
+  - used by data.gov
+  - federated
 
 - try test migration of volumes in /data/docker on a local machine
 - add https
