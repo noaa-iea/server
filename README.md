@@ -50,7 +50,7 @@ Uses: https://github.com/ekalinin/github-markdown-toc
 
 - Infographics
   - [iea-ne_info](https://github.com/marinebon/iea-ne_info)
-    **rstudio.** iea-ne.us
+    **info.** iea-ne.us
   
   
 ## Shell into server
@@ -266,6 +266,8 @@ Haven't figured out how to RUN these commands after user admin is created in rst
     ln -s /srv/shiny-server /home/admin/shiny-apps
     ln -s /var/log/shiny-server /home/admin/shiny-logs
     chown -R admin /srv/shiny-server
+    
+    git clone https://github.com/marinebon/iea-ne_info.git info
     
     ln -s /usr/share/nginx/html /home/admin/info-html
     chown -R admin /home/admin/info-html
