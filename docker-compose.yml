@@ -159,4 +159,4 @@ services:
     environment:
       VIRTUAL_HOST: erddap.$HOST
     ports:
-      - 8888:8080
+      - 8008:8080
