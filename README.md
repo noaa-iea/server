@@ -247,7 +247,8 @@ cd ~/iea-server
 
 # set environment variables
 echo "PASSWORD=S3cr!tpw" > .env
-echo "HOST=iea-ne.us" >> .env
+#echo "HOST=iea-ne.us" >> .env
+echo "HOST=iea-demo.us" >> .env
 cat .env
 
 # launch

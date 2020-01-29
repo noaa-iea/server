@@ -7,8 +7,8 @@ volumes:
   mysql-data:
   wordpress-html:
   shiny-apps:
-  erddap-data:
-  erddap-config:
+  #erddap-data:
+  #erddap-config:
   nginx-html:
 
 services:
