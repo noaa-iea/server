@@ -110,7 +110,7 @@ echo S3cr!tpw > ~/private/password_docker-iea-ne.us
 cat ~/private/password_docker-iea-ne.us
 ```
 
-## Install docker, docker-compose
+## Install Docker
 
 Since we used an image with `docker` and `docker-compose` already installed, we can skip this step.
 
@@ -206,7 +206,7 @@ Commercial support is available at
   - **info**
 - Name: **www**, Type: **CNAME**, Data:**iea-ne.us**
 
-### ships4whales
+## Run docker-compose
 
 References:
 
@@ -214,15 +214,10 @@ References:
 - [docker-compose.yml · kartoza/docker-geoserver](https://github.com/kartoza/docker-geoserver/blob/master/docker-compose.yml)
 - [How To Install WordPress With Docker Compose | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose)
 
-You will need access to the following secure files in Google Docs:
-
-- [tech-aws notes | ship-strike](https://docs.google.com/document/d/1-iAlUOVzjw7Ejdlvmt2jVWdG6XhFqm13gWS3hZJ9mDc/edit#)
-- [amazon_rds.yml](https://drive.google.com/open?id=1eddyoeFO5bslUakzireH1NFh8UsGBfEY)
-
 
 First, you will create the environment `.env` file to specify password and host:
 
-- NOTE: Set `PASSWORD`, substituting "S3cr!tpw" with password from [tech-aws notes | ship-strike - Google Docs](https://docs.google.com/document/d/1-iAlUOVzjw7Ejdlvmt2jVWdG6XhFqm13gWS3hZJ9mDc/edit#). The [docker-compose.yml](https://github.com/BenioffOceanInitiative/s4w-docker/blob/master/docker-compose.yml) uses [variable substitution in Docker](https://docs.docker.com/compose/compose-file/#variable-substitution).
+- NOTE: Set `PASSWORD`, substituting "S3cr!tpw" with your password. The [docker-compose.yml](https://github.com/BenioffOceanInitiative/s4w-docker/blob/master/docker-compose.yml) uses [variable substitution in Docker](https://docs.docker.com/compose/compose-file/#variable-substitution).
 
 ```bash
 # get latest docker-compose files
@@ -272,10 +267,6 @@ Haven't figured out how to RUN these commands after user admin is created in rst
     ln -s /usr/share/nginx/html /home/admin/info-html
     chown -R admin /home/admin/info-html
     ```
-
-1. Copy [**amazon_rds.yml**](https://drive.google.com/open?id=1eddyoeFO5bslUakzireH1NFh8UsGBfEY) into `/srv/shiny-server/.rds_amazon.yml` for connecting to the Amazon PostgreSQL/PostGIS relational database service (RDS).
-
-1. Go to shiny-apps/shiny_ships and run in rstudio to generate cache which otherwise times out when visiting site shiny.iea-ne.us/shiny_ships.
 
 ## Docker maintenance
 
