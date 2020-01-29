@@ -210,6 +210,12 @@ Commercial support is available at
 </html>
 ```
 
+Turn off:
+
+```bash
+docker stop test-web
+```
+
 ## Setup domain iea-ne.us
 
 - Bought domain **iea-ne.us** for **$12/yr** with account bdbest@gmail.com.
@@ -268,7 +274,6 @@ docker-compose restart
 # OR stop
 docker-compose stop
 ```
-
 
 ### rstudio-shiny
 
