@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # JAVA_OPTS
-MEMORY="2G" # default: "4G"
+MEMORY="4G" # default: "4G"
 NORMAL="-server -d64 -Xms$MEMORY -Xmx$MEMORY"
 HEAP_DUMP="-XX:+HeapDumpOnOutOfMemoryError"
 HEADLESS="-Djava.awt.headless=true"

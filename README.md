@@ -9,7 +9,7 @@ Uses: https://github.com/ekalinin/github-markdown-toc
 
 * [Server software](#server-software)
 * [Shell into server](#shell-into-server)
-* [Create Server](#create-server)
+* [Create Server on DigitalOcean](#create-server)
 * [Install Docker](#install-docker)
    * [docker](#docker)
    * [docker-compose](#docker-compose)
@@ -62,17 +62,23 @@ Uses: https://github.com/ekalinin/github-markdown-toc
     ssh -i ~/.ssh/id_rsa.pem bbest@ec2-34-220-29-172.us-west-2.compute.amazonaws.com
     ```
 
-## Create Server
+## Create Server on DigitalOcean
 
 Created droplet at https://digitalocean.com with ben@ecoquants.com (Google login):
 
 - Choose an image : Distributions : Marketplace :
   - **Docker** by DigitalOcean VERSION 18.06.1 OS Ubuntu 18.04
 - Choose a plan : Standard :
-  - **$20 /mo** $0.030 /hour
-  - 4 GB / 2 CPUs
-  - 80 GB SSD disk
-  - 4 TB transfer
+  - _iea-ne.us_:
+    - **$20 /mo** $0.030 /hour
+    - 4 GB / 2 CPUs
+    - 80 GB SSD disk
+    - 4 TB transfer
+  - _iea-demo.us_:
+    - **$40 /mo** $0.060 /hour
+    - 8 GB / 4 CPUs
+    - 160 GB SSD disk
+    - 5 TB transfer
 - Choose a datacenter region :
   - **San Francisco** (New York currently experiencing issues)
 - Authentication :
@@ -81,21 +87,35 @@ Created droplet at https://digitalocean.com with ben@ecoquants.com (Google login
 - How many Droplets?
   - **1  Droplet**
 - Choose a hostname :
-  - **docker-iea-ne.us**
+  - _iea-ne.us_:
+    - **docker-iea-ne.us**
+  - _iea-demo.us_:
+    - **docker-iea-demo.us**
 
 [DigitalOcean - iea-ne.us project](https://cloud.digitalocean.com/projects/367d3107-1892-46a8-ba53-2f10b9ba1e2d/resources?i=c03c66)
 
 
 Emailed:
 
-> Your new Droplet is all set to go! You can access it using the following credentials:
->
-> Droplet Name: docker-iea-ne.us
-> IP Address: 64.225.118.240
-> Username: root
-> Password: acaee0eca8104652ce35d830ba
+- _iea-ne.us_:
 
+  > Your new Droplet is all set to go! You can access it using the following credentials:
+  >
+  > Droplet Name: docker-iea-ne.us
+  > IP Address: 64.225.118.240
+  > Username: root
+  > Password: acaee0eca8104652ce35d830ba
 
+- _iea-demo.us_:
+
+  > Your new Droplet is all set to go! You can access it using the following credentials:
+  > 
+  > Droplet Name: docker-iea-demo.us
+  > IP Address: 64.227.63.43
+  > Username: root
+  > Password: 06ed4a56df0e053903f0bd483e
+
+Have to reset password upon first login.
 
 Saved on my Mac to a local file:
 
@@ -154,8 +174,7 @@ Reference:
 - [How To Run Nginx in a Docker Container on Ubuntu 14.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-run-nginx-in-a-docker-container-on-ubuntu-14-04)
 
 ```bash
-docker run --name nginx -p 80:80 -d nginx
-docker run --name nginx0 -p 80:80 -d nginx
+docker run --name test-web -p 80:80 -d nginx
 
 # confirm working
 docker ps
@@ -204,6 +223,8 @@ Commercial support is available at
   - **rstudio**
   - **shiny**
   - **info**
+  - **erddap**
+  - **ckan**
 - Name: **www**, Type: **CNAME**, Data:**iea-ne.us**
 
 ## Run docker-compose
