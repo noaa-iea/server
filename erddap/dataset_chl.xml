@@ -1,0 +1,174 @@
+<!--
+Parameters for loading M_201901-MODISA-NESGRID-CHLOR_A.nc using:
+GenerateDatasetsXml.sh -verbose
+
+- Which EDDType: EDDGridFromNcFiles
+- Parent directory: /erddapData/iea-ne/ex-chl-ppd
+- File name regex: .*nc #*
+- Full file name of one file: /erddapData/iea-ne/ex-chl-ppd/M_201901-MODISA-NESGRID-CHLOR_A.nc
+- ReloadEveryNMinutes: 10
+- cacheFromUrl:
+-->
+<!-- NOTE! The source for ex_chl_ppd_6574_b13a_6215 has nGridVariables=5,
+  but this dataset will only serve 2 because the others use different dimensions. -->
+<dataset type="EDDGridFromNcFiles" datasetID="ex_chl_ppd_6574_b13a_6215" active="true">
+    <reloadEveryNMinutes>10</reloadEveryNMinutes>
+    <updateEveryNMillis>10000</updateEveryNMillis>
+    <fileDir>/erddapData/iea-ne/ex-chl-ppd/</fileDir>
+    <fileNameRegex>.*\.nc</fileNameRegex>
+    <recursive>true</recursive>
+    <pathRegex>.*</pathRegex>
+    <metadataFrom>last</metadataFrom>
+    <matchAxisNDigits>20</matchAxisNDigits>
+    <fileTableInMemory>false</fileTableInMemory>
+    <accessibleViaFiles>false</accessibleViaFiles>
+    <!-- sourceAttributes>
+        <att name="acknowledgement">DOC NOAA Fisheries Northeast Fisheries Science Center Ecosystem Assessment and Dynamics Branch</att>
+        <att name="algorithm_reference">Hu, C., Lee, Z., &amp; Franz, B. (2012). Chlorophyll a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference . Journal of Geophysical Research, 117(C1). doi: 10.1029/2011jc007395.; O&#39;Reilly, J.E., Maritorena, S.,Mitchell, B. G., Siegel, D. A., Carder, K. L., Garver, S. A., Kahru, M., &amp; McClain, C. R. (1998). Ocean color chlorophyll algorithms for SeaWiFS, Journal of Geophysical Research 103, 24937-24953, doi: 10.1029/98JC02160.; O&#39;Reilly, J.E., &amp; 24 co-authors (2000). SeaWiFS Postlaunch Calibration and Validation Analyses, Part 3. NASA Tech. Memo. 2000-206892, Vol. 11, S.B. Hooker and E.R. Firestone, Eds., NASA Goddard Space Flight Center, 49 pp.</att>
+        <att name="central_lat" type="float">-69.99863</att>
+        <att name="central_lon" type="float">40.00355</att>
+        <att name="contributor_name">NASA/GSFC/OBPG</att>
+        <att name="contributor_role">Source of the level 1A data</att>
+        <att name="Conventions">CF-1.6</att>
+        <att name="creator_email">kimberly.hyde@noaa.gov</att>
+        <att name="creator_name">DOC NOAA Fisheries Northeast Fisheries Science Center</att>
+        <att name="creator_type">institution</att>
+        <att name="creator_url">https://www.nefsc.noaa.gov/</att>
+        <att name="date_input_file_created">2019-04-19-16:11:43</att>
+        <att name="date_netcdf_created">2019-04-23</att>
+        <att name="geospatial_lat_max" type="double">46.0071</att>
+        <att name="geospatial_lat_min" type="double">34.0</att>
+        <att name="geospatial_lat_resolution">0.008 degrees</att>
+        <att name="geospatial_lat_units">degrees_north</att>
+        <att name="geospatial_lon_max" type="double">-61.99726</att>
+        <att name="geospatial_lon_min" type="double">-78.0</att>
+        <att name="geospatial_lon_resolution">0.010degrees</att>
+        <att name="geospatial_lon_units">degrees_east</att>
+        <att name="geospatial_vertial_max" type="float">0.0</att>
+        <att name="geospatial_vertial_min" type="float">0.0</att>
+        <att name="geospatial_vertial_positive">up</att>
+        <att name="geospatial_vertial_units">m</att>
+        <att name="input_filenames">A2019001.L3B2_DAY_CHL.nc; A2019002.L3B2_DAY_CHL.nc; A2019003.L3B2_DAY_CHL.nc; A2019004.L3B2_DAY_CHL.nc; A2019005.L3B2_DAY_CHL.nc; A2019006.L3B2_DAY_CHL.nc; A2019007.L3B2_DAY_CHL.nc; A2019008.L3B2_DAY_CHL.nc; A2019009.L3B2_DAY_CHL.nc; A2019010.L3B2_DAY_CHL.nc; A2019011.L3B2_DAY_CHL.nc; A2019012.L3B2_DAY_CHL.nc; A2019013.L3B2_DAY_CHL.nc; A2019014.L3B2_DAY_CHL.nc; A2019015.L3B2_DAY_CHL.nc; A2019016.L3B2_DAY_CHL.nc; A2019017.L3B2_DAY_CHL.nc; A2019018.L3B2_DAY_CHL.nc; A2019019.L3B2_DAY_CHL.nc; A2019020.L3B2_DAY_CHL.nc; A2019021.L3B2_DAY_CHL.nc; A2019022.L3B2_DAY_CHL.nc; A2019023.L3B2_DAY_CHL.nc; A2019024.L3B2_DAY_CHL.nc; A2019025.L3B2_DAY_CHL.nc; A2019026.L3B2_DAY_CHL.nc; A2019027.L3B2_DAY_CHL.nc; A2019028.L3B2_DAY_CHL.nc; A2019029.L3B2_DAY_CHL.nc; A2019030.L3B2_DAY_CHL.nc; A2019031.L3B2_DAY_CHL.nc</att>
+        <att name="institution">DOC NOAA Fisheries Northeast Fisheries Science Center</att>
+        <att name="license">The data may be used and redistributed for free but is not intended for legal use, since it may contain inaccuracies.  Neither the data, contributor, NEFSC, NOAA, nor the United States Government, nor any of their employees or contractors, makes any warranty, expressed or implied, including warranties of marketability and fitness for a particular purpose, or assumes any legal liability for the accuracy, completeness, or usefulness of this information.</att>
+        <att name="map_notes">Level-3 binned data remapped using IDL</att>
+        <att name="Metadata__Conventions">Unidata Dataset Discovery v1.0</att>
+        <att name="original_file_name">M_201901-MODISA-R2015-L3B2-CHLOR_A-OCI-STATS.SAV</att>
+        <att name="platform">Aqua</att>
+        <att name="processing_level">level 3</att>
+        <att name="product_algorithm">Ocean band ratio plus color index algorithm</att>
+        <att name="product_name">CHLOR_A</att>
+        <att name="projection">Equal Area Cylindrical</att>
+        <att name="projection_type">lonlat_grid</att>
+        <att name="sensor">Moderate Resolution Imaging Spectroradiometer (MODIS)</att>
+        <att name="source_data_access_date">20100223-present</att>
+        <att name="source_data_doi">10.5067/AQUA/MODIS/L1A/DATA/1</att>
+        <att name="source_data_level">L1A</att>
+        <att name="source_data_url">http://oceandata.sci.gsfc.nasa.gov/</att>
+        <att name="source_data_version">R2018</att>
+        <att name="spatial_resolution">0.009 km/pixel</att>
+        <att name="time_coverage_duration">1 month</att>
+        <att name="time_coverage_end">2019-01-31T23:59:59Z</att>
+        <att name="time_coverage_start">2019-01-01T00:00:00Z</att>
+        <att name="time_period">Monthly</att>
+        <att name="title">Monthly level 3 statistics of CHLOR_A data (Ocean band ratio plus color index algorithm) from the MODIS-Aqua platform</att>
+        <att name="units">mg m^-3</att>
+    </sourceAttributes -->
+    <addAttributes>
+        <att name="cdm_data_type">Grid</att>
+        <att name="Conventions">CF-1.6, COARDS, ACDD-1.3</att>
+        <att name="infoUrl">https://www.nefsc.noaa.gov/</att>
+        <att name="keywords">algorithm, aqua, band, calculate, center, chemistry, chlor, chlor_a, chlor_a_nobs, chlorophyll, color, commerce, concentration, data, department, doc, earth, Earth Science &gt; Oceans &gt; Ocean Chemistry &gt; Chlorophyll, fisheries, geogmetric, imaging, index, latitude, level, longitude, mass, mass_concentration_of_chlorophyll_in_sea_water, mean, moderate, modis, modis-aqua, month, monthly, noaa, northeast, number, number_of_observations, observations, ocean, ocean color, oceans, platform, plus, ratio, resolution, science, sea, seawater, spectroradiometer, statistics, used, valid, water</att>
+        <att name="keywords_vocabulary">GCMD Science Keywords</att>
+        <att name="source_data_url">https://oceandata.sci.gsfc.nasa.gov/</att>
+        <att name="standard_name_vocabulary">CF Standard Name Table v55</att>
+        <att name="summary">Monthly level 3 statistics of CHLOR_A data (Ocean band ratio plus color index algorithm) from the Moderate Resolution Imaging Spectroradiometer (MODIS)-Aqua platform</att>
+        <att name="units">null</att>
+    </addAttributes>
+    <axisVariable>
+        <sourceName>latitude</sourceName>
+        <destinationName>latitude</destinationName>
+        <!-- sourceAttributes>
+            <att name="_ChunkSizes" type="int">1191</att>
+            <att name="_CoordinateAxisType">Lat</att>
+            <att name="actual_range">34.01; 46.00</att>
+            <att name="axis">Y</att>
+            <att name="comment">Latitude values are at the center of the grid cells</att>
+            <att name="coordsys">geographic</att>
+            <att name="ioos_category">location</att>
+            <att name="long_name">Latitude</att>
+            <att name="standard_name">latitude</att>
+            <att name="units">degrees_north</att>
+            <att name="valid_max" type="float">90.0</att>
+            <att name="valid_min" type="float">-90.0</att>
+        </sourceAttributes -->
+        <addAttributes>
+            <att name="_ChunkSizes">null</att>
+            <att name="ioos_category">Location</att>
+        </addAttributes>
+    </axisVariable>
+    <axisVariable>
+        <sourceName>longitude</sourceName>
+        <destinationName>longitude</destinationName>
+        <!-- sourceAttributes>
+            <att name="_ChunkSizes" type="int">1587</att>
+            <att name="_CoordinateAxisType">Lon</att>
+            <att name="actual_range">-77.99; -62.00</att>
+            <att name="axis">X</att>
+            <att name="comment">Longitude values are at the center of the grid cells</att>
+            <att name="coordsys">geographic</att>
+            <att name="ioos_category">location</att>
+            <att name="long_name">Longitude</att>
+            <att name="standard_name">longitude</att>
+            <att name="units">degrees_east</att>
+            <att name="valid_max" type="float">180.0</att>
+            <att name="valid_min" type="float">-180.0</att>
+        </sourceAttributes -->
+        <addAttributes>
+            <att name="_ChunkSizes">null</att>
+            <att name="ioos_category">Location</att>
+        </addAttributes>
+    </axisVariable>
+    <dataVariable>
+        <sourceName>chlor_a</sourceName>
+        <destinationName>chlor_a</destinationName>
+        <dataType>float</dataType>
+        <!-- sourceAttributes>
+            <att name="_ChunkSizes" type="intList">596 794</att>
+            <att name="_fillvalue" type="float">-99999.0</att>
+            <att name="comment">The geometric mean was used to calculate the mean because of the log-normal distribution of the data.</att>
+            <att name="long_name">Geogmetric mean of Concentration of Chlorophyll in Sea Water</att>
+            <att name="standard_name">mass_concentration_of_chlorophyll_in_sea_water</att>
+            <att name="units">mg m^-3</att>
+            <att name="valid_max" type="float">189.0</att>
+            <att name="valid_min" type="float">5.0E-4</att>
+        </sourceAttributes -->
+        <addAttributes>
+            <att name="_ChunkSizes">null</att>
+            <att name="colorBarMaximum" type="double">30.0</att>
+            <att name="colorBarMinimum" type="double">0.03</att>
+            <att name="colorBarScale">Log</att>
+            <att name="ioos_category">Ocean Color</att>
+        </addAttributes>
+    </dataVariable>
+    <dataVariable>
+        <sourceName>chlor_a_nobs</sourceName>
+        <destinationName>chlor_a_nobs</destinationName>
+        <dataType>float</dataType>
+        <!-- sourceAttributes>
+            <att name="_ChunkSizes" type="intList">596 794</att>
+            <att name="_fillvalue" type="float">-99999.0</att>
+            <att name="ancillary_variables">chlor_a</att>
+            <att name="long_name">number of valid observations used to calculate the mean</att>
+            <att name="standard_name">number_of_observations</att>
+            <att name="valid_max" type="int">31</att>
+            <att name="valid_min" type="int">0</att>
+        </sourceAttributes -->
+        <addAttributes>
+            <att name="_ChunkSizes">null</att>
+            <att name="colorBarMaximum" type="double">100.0</att>
+            <att name="colorBarMinimum" type="double">0.0</att>
+            <att name="ioos_category">Statistics</att>
+        </addAttributes>
+    </dataVariable>
+</dataset>
