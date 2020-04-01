@@ -364,6 +364,15 @@ docker-compose logs -f
 docker inspect rstudio-shiny
 ```
 
+## erddap quick fix
+
+```bash
+git pull
+nc_local=data/iea-ne/ex-chl-ppd/M_201901-MODISA-NESGRID-CHLOR_A.nc
+nc_docker=erddap:/erddapData/iea-ne/ex-chl-ppd/M_201901-MODISA-NESGRID-CHLOR_A.nc
+docker cp $nc_local $nc_docker
+```
+
 ## TODO
 
 Web content:

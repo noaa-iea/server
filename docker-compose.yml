@@ -148,7 +148,6 @@ services:
       - 8088:80
 
   # docker run -d -p 8080:8080 --name erddap axiom/docker-erddap
-  # sudo docker exec -it erddap bash -c "cd webapps/erddap/WEB-INF/ && bash GenerateDatasetsXml.sh -verbose"
   erddap:
     container_name: erddap
     build: ./erddap
@@ -160,3 +159,5 @@ services:
       VIRTUAL_HOST: erddap.$HOST
     ports:
       - 8080:8080
+ # sudo docker exec -it erddap bash -c "cd /usr/local/tomcat/webapps/erddap/WEB-INF && bash GenerateDatasetsXml.sh -verbose"
+  
