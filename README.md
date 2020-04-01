@@ -347,6 +347,9 @@ docker rm $(docker ps -aq)
 # remove all image
 docker rmi $(docker images -q)
 
+# remove all volumes
+docker volume rm $(docker volume ls -q)
+
 # remove all stopped containers
 docker container prune
 ```
