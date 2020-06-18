@@ -14,11 +14,18 @@ RUN install2.r --error \
   gstat \
   here \
   leaflet \
+  plotly \
+  DT \
+  rintrojs \
+  scales \
   units \
   RColorBrewer \
   RPostgreSQL \
   RPostgres \
-  shinydashboard
+  shinydashboard \
+  shinythemes \
+  plumber \
+  
   
   # already included: https://tidyverse.tidyverse.org
   #   dplyr
