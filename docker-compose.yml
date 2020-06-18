@@ -3,6 +3,7 @@ version: '3.3'
 volumes:
   nginx-conf:
   nginx-certs:
+  nginx-dhparam:
   nginx-vhost:
   nginx-html:
   share:
@@ -100,6 +101,7 @@ services:
     image: kartoza/geoserver:2.15.2
     environment:
       VIRTUAL_HOST: gs.$HOST
+      LETSENCRYPT_HOST: gs.$HOST
       USERNAME: admin
       PASS: $PASSWORD
       GEOSERVER_ADMIN_PASSWORD: $PASSWORD
@@ -159,6 +161,8 @@ services:
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: www.$HOST
+      LETSENCRYPT_HOST: $HOST,www.$HOST
+      LETSENCRYPT_EMAIL: ben@ecoquants.com
     ports:
       - 8088:80
     depends_on: 
@@ -174,6 +178,7 @@ services:
     environment:
       # [Running virtual hosts on different ports of the same container · Issue #560 · jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy/issues/560)
       VIRTUAL_HOST: "rstudio.$HOST:8787,shiny.$HOST:3838"
+      LETSENCRYPT_HOST: "rstudio.$HOST,shiny.$HOST,api.$HOST"
       ROOT: 'true'
       USER: admin
       PASSWORD: $PASSWORD
@@ -194,6 +199,7 @@ services:
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: erddap.$HOST
+      LETSENCRYPT_HOST: erddap.$HOST
     ports:
       - 8080:8080
     depends_on: 
