@@ -1,4 +1,4 @@
-FROM axiom/docker-erddap:latest
+FROM axiom/docker-erddap:2.02
 
 # Java options
 COPY setenv.sh ${CATALINA_HOME}/bin/setenv.sh
