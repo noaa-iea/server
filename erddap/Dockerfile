@@ -1,7 +1,7 @@
 FROM axiom/docker-erddap:latest
 
 # Java options
-# COPY setenv.sh ${CATALINA_HOME}/bin/setenv.sh
+COPY setenv.sh ${CATALINA_HOME}/bin/setenv.sh
 
 # install erddap config files
 WORKDIR /usr/local/tomcat/content/erddap
