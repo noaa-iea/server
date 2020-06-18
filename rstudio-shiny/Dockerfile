@@ -25,8 +25,6 @@ RUN install2.r --error \
   shinydashboard \
   shinythemes \
   plumber \
-  
-  
   # already included: https://tidyverse.tidyverse.org
   #   dplyr
   #   lubridate
@@ -43,6 +41,9 @@ RUN install2.r --error \
 RUN export ADD=shiny && bash /etc/cont-init.d/add
 
 # install Shiny apps
-RUN cd /srv && rm -rf shiny-server && \
-    git clone https://github.com/marinebon/iea-ne_apps.git shiny-server
-    
+#RUN cd /srv && rm -rf shiny-server && \
+RUN mkdir /share/github && cd /share/github && \
+  git clone https://github.com/marinebon/iea-uploader.git && \
+  ln -s iea-uploader /srv/shiny-server/uploader && \
+  git clone https://github.com/marinebon/edna-vis.git && \
+  ln -s shiny /srv/shiny-server/edna-vis
