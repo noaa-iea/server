@@ -1,30 +1,32 @@
-FROM rocker/geospatial:latest
+# `etc/cont-init.d/add: No such file or directory` with 4.0.0
+#   https://github.com/rocker-org/rocker-versioned/issues/219#issuecomment-633680843
+FROM rocker/geospatial:3.6.3
 MAINTAINER "Ben Best" ben@ecoquants.com
 
 # install extra packages 
 RUN install2.r --error \
-  # for shiny:
-  Rcpp \
-  httpuv \
-  shiny \
-  # for app: https://github.com/BenioffOceanInitiative/ships4whales-app/blob/master/shiny_ships/app.R
   dbplyr \
+  DT \
   fs \
   glue \
   gstat \
   here \
+  httpuv \
   leaflet \
   plotly \
-  DT \
-  rintrojs \
-  scales \
-  units \
+  plumber \
   RColorBrewer \
+  Rcpp \
+  rintrojs \
   RPostgreSQL \
   RPostgres \
+  scales \
+  shiny \
   shinydashboard \
+  shinymanager \
   shinythemes \
-  plumber \
+  units \
+  
   # already included: https://tidyverse.tidyverse.org
   #   dplyr
   #   lubridate
@@ -41,7 +43,6 @@ RUN install2.r --error \
 RUN export ADD=shiny && bash /etc/cont-init.d/add
 
 # install Shiny apps
-#RUN cd /srv && rm -rf shiny-server && \
 RUN mkdir /share/github && cd /share/github && \
   git clone https://github.com/marinebon/iea-uploader.git && \
   ln -s iea-uploader /srv/shiny-server/uploader && \
