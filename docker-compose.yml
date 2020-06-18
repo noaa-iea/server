@@ -96,30 +96,30 @@ services:
     depends_on:
       - postgis
 
-  geoserver:
-    container_name: geoserver
-    image: kartoza/geoserver:2.15.2
-    environment:
-      VIRTUAL_HOST: gs.$HOST
-      LETSENCRYPT_HOST: gs.$HOST
-      USERNAME: admin
-      PASS: $PASSWORD
-      GEOSERVER_ADMIN_PASSWORD: $PASSWORD
-    volumes:
-      - geoserver-data:/opt/geoserver/data_dir
-      - share:/share    
-    ports:
-      - 8888:8080
-    restart: unless-stopped
-    depends_on:
-      - postgis
-    healthcheck:
-      test: curl --fail -s http://localhost:8888/ || exit 1
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-    depends_on: 
-     - nginx-proxy
+  # geoserver:
+  #   container_name: geoserver
+  #   image: kartoza/geoserver:2.15.2
+  #   environment:
+  #     VIRTUAL_HOST: gs.$HOST
+  #     LETSENCRYPT_HOST: gs.$HOST
+  #     USERNAME: admin
+  #     PASS: $PASSWORD
+  #     GEOSERVER_ADMIN_PASSWORD: $PASSWORD
+  #   volumes:
+  #     - geoserver-data:/opt/geoserver/data_dir
+  #     - share:/share    
+  #   ports:
+  #     - 8888:8080
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - postgis
+  #   healthcheck:
+  #     test: curl --fail -s http://localhost:8888/ || exit 1
+  #     interval: 1m30s
+  #     timeout: 10s
+  #     retries: 3
+  #   depends_on: 
+  #    - nginx-proxy
 
   # mysql:
   #   container_name: mysql

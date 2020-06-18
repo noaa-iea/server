@@ -50,7 +50,7 @@ You MUST CHANGE these to the appropriate browser administrator for your site.
 Whether or not you set up the email system, all potential email messages
 are logged to an emailLogYEAR-MONTH.txt file in the bigParentDirectory.
 -->
-<emailEverythingTo>nobody@example.com</emailEverythingTo>
+<emailEverythingTo>ben@ecoquants.com</emailEverythingTo>
 <emailDailyReportsTo>nobody@example.com</emailDailyReportsTo>
 
 <!-- This lets you specify a regular expression which determines which datasetIDs
@@ -107,8 +107,7 @@ You MUST CHANGE this when you install ERDDAP on your server. For example,
 <baseUrl>http://127.0.0.1:8080</baseUrl>              used for running/testing on your personal computer
 <baseUrl>http://coastwatch.pfeg.noaa.gov</baseUrl>    used for ERD releases (erddap and erddap2)
 -->
-<!--baseUrl>http://localhost:8080</baseUrl-->
-<baseUrl>http://localhost:8080</baseUrl>
+<baseUrl>http://erddap.iea-demo.us</baseUrl>
 
 <!-- This is a variant of <baseUrl> which is used when authentication is active and the user is logged in.
   In general, you take the <baseUrl>, change "http" to "https", and change/add ":8443".
@@ -120,8 +119,7 @@ You MUST CHANGE this when you install ERDDAP on your server. For example,
 <baseHttpsUrl>https://127.0.0.1:8443</baseHttpsUrl>                 used for running/testing on your personal computer
 <baseHttpsUrl>https://coastwatch.pfeg.noaa.gov:8443</baseHttpsUrl>  used at ERD for releases (erddap and erddap2)
 -->
-<!--baseHttpsUrl>https://localhost:8443</baseHttpsUrl-->
-<baseHttpsUrl>https://localhost:8443</baseHttpsUrl>
+<baseHttpsUrl>https://erddap.iea-demo.us</baseHttpsUrl>
 
 
 <!-- **************************************************************************** -->
@@ -170,28 +168,28 @@ and you are using anti-virus software (e.g., McAfee) make sure McAfee
 Anti Virus Standard Protections :
 Prevent mass mailing worms from sending mail" is un-checked.
 -->
-<emailFromAddress>nothing@example.com</emailFromAddress>
+<emailFromAddress>ben@ecoquants.com</emailFromAddress>
 <emailUserName></emailUserName>
 <emailPassword></emailPassword>
 <emailProperties></emailProperties>
 <emailSmtpHost></emailSmtpHost>
-<emailSmtpPort></emailSmtpPort>
+<emailSmtpPort>587</emailSmtpPort>
 
 
 <!-- Information about the ERDDAP administrator is used for the SOS and WMS servers.
 You MUST CHANGE these to describe your installation.
 -->
-<adminInstitution>Axiom Docker Install</adminInstitution>
-<adminInstitutionUrl>https://github.com/axiom-data-science/docker-erddap</adminInstitutionUrl>
-<adminIndividualName>Axiom Docker Install</adminIndividualName>
-<adminPosition>Software Engineer</adminPosition>
-<adminPhone>555-555-5555</adminPhone>
-<adminAddress>123 Irrelevant St.</adminAddress>
-<adminCity>Nowhere</adminCity>
-<adminStateOrProvince>AK</adminStateOrProvince>
-<adminPostalCode>99504</adminPostalCode>
+<adminInstitution>Marine Biodiversity Observation Network</adminInstitution>
+<adminInstitutionUrl>https://marinebon.org</adminInstitutionUrl>
+<adminIndividualName>Ben Best</adminIndividualName>
+<adminPosition>environmental data scientist</adminPosition>
+<adminPhone>805-705-9770</adminPhone>
+<adminAddress>414 Olive St</adminAddress>
+<adminCity>Santa Barbara</adminCity>
+<adminStateOrProvince>CA</adminStateOrProvince>
+<adminPostalCode>93101</adminPostalCode>
 <adminCountry>USA</adminCountry>
-<adminEmail>nobody@example.com</adminEmail>
+<adminEmail>ben@ecoquants.com</adminEmail>
 
 <!--
 These default accessConstraints, fees, and keywords are used by
@@ -376,7 +374,7 @@ At ERD, we use "Bitstream Vera Sans"
   http://coastwatch.pfeg.noaa.gov/erddap/download/BitstreamVeraSans.zip
   and unzip the files into [javaHome]/jre/lib/fonts so Java sees them.
 -->
-  <fontFamily>DejaVu Sans</fontFamily>
+<fontFamily>Bitstream Vera Sans</fontFamily>
 
 <!-- When possible (and it isn't always possible), ERDDAP breaks source data requests
 into chunks to conserve memory. See the description of these tags in messages.xml.

@@ -1,5 +1,7 @@
 # iea-server
-Server software stack for NOAA's Integrated Ecosystem Assessment (IEA) program, containerized using Docker
+Server software stack for MBON server serving dashboards
+Server
+Server
 
 Contents:
 <!--
@@ -58,8 +60,7 @@ Uses: https://github.com/ekalinin/github-markdown-toc
 1. Connect to UCSB VPN via Secure Pulse
 1. SSH, eg for Ben:
     ```bash
-
-    ssh -i ~/.ssh/id_rsa.pem bbest@ec2-34-220-29-172.us-west-2.compute.amazonaws.com
+    sshpass -f ~/private/password_docker-iea-demo.us ssh root@iea-demo.us
     ```
 
 ## Create Server on DigitalOcean
@@ -69,7 +70,7 @@ Created droplet at https://digitalocean.com with ben@ecoquants.com (Google login
 - Choose an image : Distributions : Marketplace :
   - **Docker** by DigitalOcean VERSION 18.06.1 OS Ubuntu 18.04
 - Choose a plan : Standard :
-  - _iea-ne.us_:
+  - _iea-demo.us_:
     - **$20 /mo** $0.030 /hour
     - 4 GB / 2 CPUs
     - 80 GB SSD disk
@@ -87,40 +88,29 @@ Created droplet at https://digitalocean.com with ben@ecoquants.com (Google login
 - How many Droplets?
   - **1  Droplet**
 - Choose a hostname :
-  - _iea-ne.us_:
-    - **docker-iea-ne.us**
   - _iea-demo.us_:
-    - **docker-iea-demo.us**
+    - **iea-demo.us**
 
 [DigitalOcean - iea-ne.us project](https://cloud.digitalocean.com/projects/367d3107-1892-46a8-ba53-2f10b9ba1e2d/resources?i=c03c66)
 
 
-Emailed:
-
-- _iea-ne.us_:
-
-  > Your new Droplet is all set to go! You can access it using the following credentials:
-  >
-  > Droplet Name: docker-iea-ne.us
-  > IP Address: 64.225.118.240
-  > Username: root
-  > Password: acaee0eca8104652ce35d830ba
+Email recieved with IP and temporary password:
 
 - _iea-demo.us_:
 
   > Your new Droplet is all set to go! You can access it using the following credentials:
   > 
   > Droplet Name: docker-iea-demo.us
-  > IP Address: 64.227.63.43
+  > IP Address: 157.245.189.38
   > Username: root
-  > Password: 06ed4a56df0e053903f0bd483e
+  > Password: 513dbca94734429761db936640
 
 Have to reset password upon first login.
 
 Saved on my Mac to a local file:
 
 ```bash
-ssh root@64.225.118.240
+ssh root@157.245.189.38
 # enter password from above
 # you will be asked to change it upon login
 ```
@@ -138,6 +128,22 @@ References:
 
 - [How To Install and Use Docker on Ubuntu 18.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) for more.
 
+```bash
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+
+# add the GPG key for the official Docker repository to your system
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# add the Docker repository to APT sources 
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+
+# update the package database with the Docker packages from the newly added repo
+sudo apt update
+
+# install Docker
+sudo apt install docker-ce
+```
+
 ### docker
 
 ```bash
@@ -149,7 +155,10 @@ uname -a
 sudo apt update
 
 # check that it’s running
-systemctl status docker
+sudo systemctl status docker
+
+# add permissions to run docker for current user
+sudo usermod -aG docker ${USER}
 ```
 
 ### docker-compose
@@ -157,13 +166,22 @@ systemctl status docker
 References:
 
 - [How To Install Docker Compose on Ubuntu 18.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04)
-- [Install Docker Compose | Docker Documentation](https://docs.docker.com/compose/install/)
 
 ```bash
-# test the installation
+# check for latest version at https://github.com/docker/compose/releases and update in url
+sudo curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+# set the permissions
+sudo chmod +x /usr/local/bin/docker-compose
+
+# verify that the installation was successful by checking the version:
 docker-compose --version
-# docker-compose version 1.22.0, build f46880fe
+# docker-compose version 1.25.4, build 8d51620a
 ```
+
+
+- [Install Docker Compose | Docker Documentation](https://docs.docker.com/compose/install/)
+
 
 ## Build containers
 
@@ -218,11 +236,11 @@ docker stop test-web
 
 ## Setup domain iea-ne.us
 
-- Bought domain **iea-ne.us** for **$12/yr** with account bdbest@gmail.com.
+- Bought domain **iea-demo.us** for **$12/yr** with account bdbest@gmail.com.
 
-- DNS matched to server IP `64.225.118.240` to domain **iea-ne.us** via [Google Domains]( https://domains.google.com/m/registrar/iea-ne.us/dns), plus the following subdomains added under **Custom resource records** with:
+- DNS matched to server IP `64.225.118.240` to domain **iea-demo.us** via [Google Domains]( https://domains.google.com/m/registrar/iea-ne.us/dns), plus the following subdomains added under **Custom resource records** with:
 
-- Type: **A**, Data:**64.225.118.240** and Name:
+- Type: **A**, Data:**157.245.189.38** and Name:
   - **@**
   - **wp**
   - **gs**
@@ -253,12 +271,26 @@ cd ~/iea-server
 
 # set environment variables
 echo "PASSWORD=S3cr!tpw" > .env
-#echo "HOST=iea-ne.us" >> .env
-echo "HOST=iea-demo.us" >> .env
+echo "HOST=mbon.marine.usf.edu" >> .env
 cat .env
 
 # launch
 docker-compose up -d
+
+# Creating network "iea-server_default" with the default driver
+# Creating volume "iea-server_postgis-backups" with default driver
+# Creating volume "iea-server_geoserver-data" with default driver
+# Creating volume "iea-server_postgis-data" with default driver
+# Creating volume "iea-server_mysql-data" with default driver
+# Creating volume "iea-server_wordpress-html" with default driver
+# Creating volume "iea-server_shiny-apps" with default driver
+# Creating volume "iea-server_erddap-data" with default driver
+# Creating volume "iea-server_erddap-config" with default driver
+# Creating volume "iea-server_nginx-html" with default driver
+# Pulling postgis (kartoza/postgis:11.0-2.5)...
+# 11.0-2.5: Pulling from kartoza/postgis
+# 68ced04f60ab: Pull complete
+# ...
 
 # OR update
 git pull; docker-compose up -d
@@ -287,9 +319,15 @@ Haven't figured out how to RUN these commands after user admin is created in rst
     sudo su -
     ln -s /srv/shiny-server /home/admin/shiny-apps
     ln -s /var/log/shiny-server /home/admin/shiny-logs
-    chown -R admin /srv/shiny-server
+    mkdir /srv/github
+    ln -s /srv/github /home/admin/github
     
-    git clone https://github.com/marinebon/iea-ne_info.git info
+    cd /srv/github
+    git clone https://github.com/marinebon/iea-ne_info.git
+    git clone https://github.com/marinebon/iea-uploader.git
+    
+    chown -R admin /srv/shiny-server
+    chown -R admin /srv/github
     
     ln -s /usr/share/nginx/html /home/admin/info-html
     chown -R admin /home/admin/info-html
@@ -364,13 +402,50 @@ docker-compose logs -f
 docker inspect rstudio-shiny
 ```
 
+## shiny app shuffle
+
+in rstudio.iea-demo.us terminal:
+
+```
+cd /srv
+mkdir -p github/iea-ne_apps
+cd /srv/shiny-server/
+mv * ../github/iea-ne_apps/.
+mv .git ../github/iea-ne_apps/.
+mv .gitignore ../github/iea-ne_apps/.
+ln -s /srv/github/iea-ne_apps/test /srv/shiny-server/test
+cd ../github
+
+ln -s /srv/github/iea-uploader /srv/shiny-server/uploader
+```
+
+
 ## erddap quick fix
 
 ```bash
 git pull
-nc_local=data/iea-ne/ex-chl-ppd/M_201901-MODISA-NESGRID-CHLOR_A.nc
+
+nc_local=./erddap/data/iea-ne/ex-chl-ppd/M_201901-MODISA-NESGRID-CHLOR_A.nc
 nc_docker=erddap:/erddapData/iea-ne/ex-chl-ppd/M_201901-MODISA-NESGRID-CHLOR_A.nc
+docker exec erddap bash -c "mkdir -p /erddapData/iea-ne/ex-chl-ppd"
+docker exec erddap bash -c "mkdir -p /usr/local/tomcat/conf/Catalina/localhost"
 docker cp $nc_local $nc_docker
+
+docker exec -it erddap bash -c "cd /usr/local/tomcat/webapps/erddap/WEB-INF && bash GenerateDatasetsXml.sh -verbose"
+```
+Doh! Still Bad Gateway at http://erddap.iea-demo.us/
+
+```
+Parameters for loading M_201901-MODISA-NESGRID-CHLOR_A.nc using:
+GenerateDatasetsXml.sh -verbose
+
+- Which EDDType: EDDGridFromNcFiles
+- Parent directory: /erddapData/iea-ne/ex-chl-ppd
+- File name regex: .*\.*nc
+- Full file name of one file: /erddapData/iea-ne/ex-chl-ppd/M_201901-MODISA-NESGRID-CHLOR_A.nc
+- ReloadEveryNMinutes: 10
+- cacheFromUrl:
+^D
 ```
 
 ## TODO
