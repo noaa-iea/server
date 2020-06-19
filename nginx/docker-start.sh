@@ -1,5 +1,3 @@
-apt-get update; apt-get --assume-yes install git
-
 mkdir /share/github
 cd /share/github
 
