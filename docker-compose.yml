@@ -157,6 +157,7 @@ services:
     build: ./nginx
     volumes:
       - share:/share
+    entrypoint: /docker-start.sh
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: www.$HOST
