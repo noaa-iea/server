@@ -41,4 +41,12 @@ RUN install2.r --error \
 # add Shiny, per https://github.com/rocker-org/rocker/issues/235#issuecomment-299036810
 RUN export ADD=shiny && bash /etc/cont-init.d/add
 
-COPY docker-start.sh /docker-start.sh
+RUN mkdir -p /share/github
+cd /share/github
+
+RUN if [ ! -d "/share/github/iea-uploader" ] ; then \
+  git clone https://github.com/marinebon/iea-uploader.git ; \
+  ln -s /share/github/iea-uploader /srv/shiny-server/uploader ; fi \
+RUN if [ ! -d "/share/github/edna-vis" ] ; then \
+  git clone https://github.com/marinebon/edna-vis.git ; \
+  ln -s /share/github/edna-vis /srv/shiny-server/edna-vis ; fi \

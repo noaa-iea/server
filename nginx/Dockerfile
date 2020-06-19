@@ -8,8 +8,7 @@ RUN mkdir -p /share/github
 
 ENV repo=iea-ne_info
 RUN if [ ! -d "/share/github/$repo" ] ; then \
-  cd /share/github ; \
-  git clone https://github.com/marinebon/$repo.git ; \
+  git clone https://github.com/marinebon/$repo.git /share/github/$repo ; \
   mv /usr/share/nginx/html /usr/share/nginx/html_0 ; \
-  ln -s $repo /usr/share/nginx/html ; \
+  ln -s /share/github/$repo /usr/share/nginx/html ; \
 fi

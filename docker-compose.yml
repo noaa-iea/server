@@ -174,7 +174,6 @@ services:
     volumes:
       - shiny-apps:/srv/shiny-server
       - share:/share
-    entrypoint: sh /docker-start.sh
     restart: unless-stopped
     environment:
       # [Running virtual hosts on different ports of the same container · Issue #560 · jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy/issues/560)
