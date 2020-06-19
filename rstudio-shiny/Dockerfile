@@ -46,7 +46,7 @@ WORKDIR /share/github
 
 RUN if [ ! -d "iea-uploader" ] ; then \
   git clone https://github.com/marinebon/iea-uploader.git ; \
-  ln -s iea-uploader /srv/shiny-server/uploader ; fi \
+  ln -s iea-uploader /srv/shiny-server/uploader ; fi
 RUN if [ ! -d "edna-vis" ] ; then \
   git clone https://github.com/marinebon/edna-vis.git ; \
-  ln -s edna-vis /srv/shiny-server/edna-vis ; fi \
+  ln -s edna-vis /srv/shiny-server/edna-vis ; fi
