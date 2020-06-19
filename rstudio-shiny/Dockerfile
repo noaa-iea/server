@@ -25,8 +25,7 @@ RUN install2.r --error \
   shinydashboard \
   shinymanager \
   shinythemes \
-  units \
-  
+  units
   # already included: https://tidyverse.tidyverse.org
   #   dplyr
   #   lubridate
