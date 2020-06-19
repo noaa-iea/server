@@ -157,7 +157,7 @@ services:
     build: ./nginx
     volumes:
       - share:/share
-    entrypoint: /docker-start.sh
+    entrypoint: sh /docker-start.sh
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: www.$HOST
@@ -175,11 +175,11 @@ services:
     volumes:
       - shiny-apps:/srv/shiny-server
       - share:/share
-    entrypoint: /docker-start.sh
+    entrypoint: sh /docker-start.sh
     restart: unless-stopped
     environment:
       # [Running virtual hosts on different ports of the same container · Issue #560 · jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy/issues/560)
-      VIRTUAL_HOST: "rstudio.$HOST:8787,shiny.$HOST:3838,api.$HOST:8888"
+      VIRTUAL_HOST: "rstudio.$HOST:8787,shiny.$HOST:3838,api.$HOST:8000"
       LETSENCRYPT_HOST: "rstudio.$HOST,shiny.$HOST,api.$HOST"
       ROOT: 'true'
       USER: admin
@@ -187,7 +187,7 @@ services:
     ports:
       - 8787:8787
       - 3838:3838
-      - 8888:8888
+      - 8000:8000
     depends_on: 
      - nginx-proxy
 
