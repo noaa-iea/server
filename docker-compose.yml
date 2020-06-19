@@ -156,8 +156,7 @@ services:
     container_name: nginx
     build: ./nginx
     volumes:
-    # - nginx-html:/usr/share/nginx/html
-      - "share:/share"
+      - share:/share
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: www.$HOST
@@ -174,6 +173,7 @@ services:
     image: bdbest/rstudio-shiny:s4w
     volumes:
       - shiny-apps:/srv/shiny-server
+      - share:/share
     restart: unless-stopped
     environment:
       # [Running virtual hosts on different ports of the same container · Issue #560 · jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy/issues/560)
